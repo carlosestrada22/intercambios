@@ -1,0 +1,10 @@
+.participante {
+    max-width: 50%;
+    position: relative;
+    min-width: 450px;
+    margin: 10px;
+}
+
+.list-participantes{
+    display: inline-block;
+}

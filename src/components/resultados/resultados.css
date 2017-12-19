@@ -1,0 +1,11 @@
+.sidebar {
+    width: 20%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.img-regalado{
+    width: 20%;
+}
