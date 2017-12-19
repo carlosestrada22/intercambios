@@ -16,11 +16,13 @@ class Participantes extends Component {
         this.props.axios.get(`http://${window.location.hostname}:5000/api/participants`)
             .then(res => {
                 this.setState({ Participantes: res.data })
-                // console.log('participantes', this.state.Participantes)
             })
 
         this.props.axios.get(`http://${window.location.hostname}:5000/api/resultados?id=${this.props.user.id}`)
             .then(res => this.setState({ Regalado: res.data }))
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     render() {
@@ -51,7 +53,6 @@ class Participantes extends Component {
 
 
 const Participante = ({ user }) => {
-    // console.log(this.props)
     return (
         <div className="participante hoverable">
             <div className="col s4 m3 offset-m2 l1 offset-l3">

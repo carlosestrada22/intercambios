@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 const fs = require('fs')
 const cors = require('cors')
 
-//corregir esta linea
 const Participants = new Array()//JSON.parse(fs.readFileSync(path.join(__dirname, 'participants.txt'))) 
 
 let Relaciones = []
@@ -23,7 +22,7 @@ app.get('/api/relacionar', (req, res) => {
 
 app.get('/api/resultados', (req, res) => {
     console.log(req.query)
-    res.send(Relaciones.find(x => x.Regalante.id === req.query.id).Regalado)
+    Relaciones.length > 0 ? res.send(Relaciones.find(x => x.Regalante.id === req.query.id).Regalado) : res.sendStatus(404)
 })
 
 app.get('/api/participants', (req, res) => {
@@ -34,14 +33,14 @@ app.post('/api/resetear', (req, res) => {
     for (let i = 0; i < Participants.length; i++) {
         Participants.pop()       
     }
-    fs.unlinkSync(path.join(__dirname, 'participants.txt'))
+    fs.unlinkSync(path.join(__dirname, 'dump_participants.txt'))
     res.sendStatus(200)
 })
 
 app.post('/api/inscribe', (req, res) => {
     // fs.appendFileSync(path.join(__dirname, 'dump.txt'), req.body + ',')
     !Participants.find(x => x.id === req.body.user.id) ? Participants.push(req.body.user) : ""
-    fs.writeFileSync(path.join(__dirname, 'participants.txt'), JSON.stringify(Participants, null, '\t'))
+    fs.writeFileSync(path.join(__dirname, 'dump_participants.txt'), JSON.stringify(Participants, null, '\t'))
     res.sendStatus(200)
 })
 
@@ -60,7 +59,7 @@ const Relacionar = () => {
 
     Relaciones.find(x => x.Regalado.id === x.Regalante.id ? Relacionar() : "")
 
-    fs.writeFileSync(path.join(__dirname, 'relaciones.txt'), JSON.stringify(Relaciones, null, '\t'))
+    fs.writeFileSync(path.join(__dirname, 'dump_relaciones.txt'), JSON.stringify(Relaciones, null, '\t'))
 
     return Relaciones
 }
