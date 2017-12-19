@@ -51,7 +51,6 @@ class Participantes extends Component {
     }
 }
 
-
 const Participante = ({ user }) => {
     return (
         <div className="participante hoverable">
